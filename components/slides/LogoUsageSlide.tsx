@@ -4,8 +4,14 @@ import Image from "next/image";
 import { BrandData } from "@/data/brands";
 import { Share2, Download, Printer, Maximize2, Monitor } from "lucide-react";
 
-export default function LogoUsageSlide({ brand }: { brand: BrandData }) {
-    const activeLogo = brand.logos.fullyShape;
+export default function LogoUsageSlide({ brand, variant }: { brand: BrandData; variant: 'full-shape' | 'geometric' }) {
+    // Use transparent logos for usage showcase
+    const activeLogo = variant === 'full-shape' ? brand.logos.transparentFull : brand.logos.transparentGeo;
+    // Use white logo for dark backgrounds
+    const whiteLogoForDark = variant === 'full-shape' ? brand.logos.transparentFullWhite : brand.logos.transparentGeoWhite;
+    // Use real black logo for monochrome if available (Geometric), otherwise fallback to active logo with CSS filter
+    const monochromeLogo = variant === 'geometric' ? brand.logos.transparentGeoBlack : activeLogo;
+    const isMonochromeUsingFile = variant === 'geometric';
 
     return (
         <div className="flex flex-col w-full min-h-full bg-[#f8f9fa] overflow-y-auto no-scrollbar scroll-smooth p-0 select-none pt-10">
@@ -19,90 +25,84 @@ export default function LogoUsageSlide({ brand }: { brand: BrandData }) {
                     </p>
                 </div>
 
-                <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 flex-1 mb-16">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 flex-1 mb-16">
                     {/* 1. Light Background */}
-                    <div className="flex flex-col space-y-4 group">
-                        <div className="aspect-square bg-white border border-zinc-200 flex items-center justify-center p-12 relative rounded-3xl shadow-sm hover:shadow-xl transition-all duration-500 overflow-hidden">
-                            <div className="absolute top-6 left-6 flex flex-col items-start">
-                                <span className="text-[10px] uppercase font-bold tracking-widest text-zinc-300">On Light</span>
-                                <div className="h-px w-6 bg-zinc-100 mt-1" />
-                            </div>
+                    <div className="flex flex-col group">
+                        <div className="aspect-square bg-white border border-zinc-200 flex items-center justify-center p-12 relative overflow-hidden transition-all duration-500">
                             <Image
                                 src={activeLogo}
-                                alt="Logo on Light"
+                                alt="Light Background"
                                 fill
                                 className="object-contain p-12 group-hover:scale-110 transition-transform duration-700"
                                 unoptimized
                             />
                         </div>
-                        <div className="px-2">
-                            <h4 className="text-xs font-bold text-zinc-400 tracking-widest uppercase">Safe Zone: White</h4>
+                        <div className="pt-4 text-center">
+                            <h4 className="text-xs font-bold text-zinc-900 uppercase tracking-widest">Light Background</h4>
                         </div>
                     </div>
 
                     {/* 2. Dark Background */}
-                    <div className="flex flex-col space-y-4 group">
-                        <div className="aspect-square bg-[#111111] border border-zinc-800 flex items-center justify-center p-12 relative rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-500 overflow-hidden">
-                            <div className="absolute top-6 left-6 flex flex-col items-start">
-                                <span className="text-[10px] uppercase font-bold tracking-widest text-zinc-600">On Dark</span>
-                                <div className="h-px w-6 bg-zinc-800 mt-1" />
-                            </div>
+                    <div className="flex flex-col group">
+                        <div className="aspect-square bg-black border border-black flex items-center justify-center p-12 relative overflow-hidden transition-all duration-500">
                             <Image
-                                src={activeLogo}
-                                alt="Logo on Dark"
+                                src={whiteLogoForDark}
+                                alt="Dark Background"
                                 fill
-                                className="object-contain p-12 invert group-hover:scale-110 transition-transform duration-700"
+                                className="object-contain p-12 group-hover:scale-110 transition-transform duration-700"
                                 unoptimized
                             />
                         </div>
-                        <div className="px-2">
-                            <h4 className="text-xs font-bold text-zinc-400 tracking-widest uppercase">Safe Zone: Black</h4>
+                        <div className="pt-4 text-center">
+                            <h4 className="text-xs font-bold text-zinc-900 uppercase tracking-widest">Dark Background</h4>
                         </div>
                     </div>
 
-                    {/* 3. Primary Color Background */}
-                    <div className="flex flex-col space-y-4 group">
+                    {/* 3. Color on Color */}
+                    <div className="flex flex-col group">
                         <div
-                            className="aspect-square flex items-center justify-center p-12 relative rounded-3xl shadow-lg hover:shadow-xl transition-all duration-500 overflow-hidden"
-                            style={{ backgroundColor: brand.colors.primary }}
+                            className="aspect-square flex items-center justify-center p-12 relative overflow-hidden transition-all duration-500 border border-black/5"
+                            style={{
+                                backgroundColor: '#D0E2D3' // Light Sage (User request)
+                            }}
                         >
-                            <div className="absolute top-6 left-6 flex flex-col items-start">
-                                <span className="text-[10px] uppercase font-bold tracking-widest text-white/30">Brand Color</span>
-                                <div className="h-px w-6 bg-white/10 mt-1" />
-                            </div>
+                            {/* Material Softness Overlay */}
+                            <div className="absolute inset-0 bg-gradient-to-tr from-black/5 to-white/20 pointer-events-none" />
+
                             <Image
                                 src={activeLogo}
-                                alt="Logo on Brand"
+                                alt="Color on Color"
                                 fill
-                                className="object-contain p-12 invert group-hover:scale-110 transition-transform duration-700"
+                                className="object-contain p-12 group-hover:scale-110 transition-transform duration-700"
+                                style={{
+                                    // Soft shadow for grounding on a light surface
+                                    filter: 'drop-shadow(0 4px 8px rgba(0,0,0,0.1))'
+                                }}
                                 unoptimized
                             />
                         </div>
-                        <div className="px-2">
-                            <h4 className="text-xs font-bold text-zinc-400 tracking-widest uppercase">Brand Signature</h4>
+                        <div className="pt-4 text-center">
+                            <h4 className="text-xs font-bold text-zinc-900 uppercase tracking-widest">Color on Color</h4>
                         </div>
                     </div>
 
-                    {/* 4. Secondary Color Background */}
-                    <div className="flex flex-col space-y-4 group">
-                        <div
-                            className="aspect-square flex items-center justify-center p-12 relative rounded-3xl shadow-lg hover:shadow-xl transition-all duration-500 overflow-hidden"
-                            style={{ backgroundColor: brand.colors.secondary }}
-                        >
-                            <div className="absolute top-6 left-6 flex flex-col items-start">
-                                <span className="text-[10px] uppercase font-bold tracking-widest text-white/30">Secondary</span>
-                                <div className="h-px w-6 bg-white/10 mt-1" />
-                            </div>
+                    {/* 4. Monochrome */}
+                    <div className="flex flex-col group">
+                        <div className="aspect-square bg-white border border-zinc-200 flex items-center justify-center p-12 relative overflow-hidden transition-all duration-500">
                             <Image
-                                src={activeLogo}
-                                alt="Logo on Secondary"
+                                src={monochromeLogo}
+                                alt="Monochrome"
                                 fill
-                                className="object-contain p-12 invert group-hover:scale-110 transition-transform duration-700"
+                                className="object-contain p-12 group-hover:scale-110 transition-transform duration-700"
+                                style={!isMonochromeUsingFile ? {
+                                    // High-contrast monochrome: Preserves details like the gold stripe as white space
+                                    filter: 'grayscale(100%) contrast(1000%)'
+                                } : undefined}
                                 unoptimized
                             />
                         </div>
-                        <div className="px-2">
-                            <h4 className="text-xs font-bold text-zinc-400 tracking-widest uppercase">Alt Environment</h4>
+                        <div className="pt-4 text-center">
+                            <h4 className="text-xs font-bold text-zinc-900 uppercase tracking-widest">Monochrome</h4>
                         </div>
                     </div>
                 </div>

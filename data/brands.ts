@@ -14,6 +14,11 @@ export interface BrandData {
     logos: {
         fullyShape: string;
         geometric: string;
+        transparentFull: string;
+        transparentGeo: string;
+        transparentFullWhite: string;
+        transparentGeoWhite: string;
+        transparentGeoBlack: string;
     };
     colors: {
         primary: string;
@@ -63,6 +68,11 @@ export const brands: BrandData[] = [
         logos: {
             fullyShape: "/logos/source-full/sqc.png",
             geometric: "/logos/source-geo/sqc.png",
+            transparentFull: "/logos/transparent/full-shape/sqc.png",
+            transparentGeo: "/logos/transparent/geometric/sqc.png",
+            transparentFullWhite: "/logos/transparent/full-shape-white/sqc.png",
+            transparentGeoWhite: "/logos/transparent/geometric-white/sqc.png",
+            transparentGeoBlack: "/logos/transparent/geometric-black/sqc.png",
         },
         colors: {
             primary: "#111827",
@@ -106,6 +116,11 @@ export const brands: BrandData[] = [
         logos: {
             fullyShape: "/logos/source-full/mtb.png",
             geometric: "/logos/source-geo/mtb.png",
+            transparentFull: "/logos/transparent/full-shape/mtb.png",
+            transparentGeo: "/logos/transparent/geometric/mtb.png",
+            transparentFullWhite: "/logos/transparent/full-shape-white/mtb.png",
+            transparentGeoWhite: "/logos/transparent/geometric-white/mtb.png",
+            transparentGeoBlack: "/logos/transparent/geometric-black/mtb.png",
         },
         colors: {
             primary: "#111827",
@@ -153,6 +168,11 @@ export const brands: BrandData[] = [
         logos: {
             fullyShape: "/logos/source-full/mre.png",
             geometric: "/logos/source-geo/mre.png",
+            transparentFull: "/logos/transparent/full-shape/mre.png",
+            transparentGeo: "/logos/transparent/geometric/mre.png",
+            transparentFullWhite: "/logos/transparent/full-shape-white/mre.png",
+            transparentGeoWhite: "/logos/transparent/geometric-white/mre.png",
+            transparentGeoBlack: "/logos/transparent/geometric-black/mre.png",
         },
         colors: {
             primary: "#111827",

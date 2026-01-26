@@ -7,10 +7,6 @@ import IntroSlide from "@/components/slides/IntroSlide";
 import ArchitectureSlide from "@/components/slides/ArchitectureSlide";
 import VisualDnaGeometricSlide from "@/components/slides/VisualDnaGeometricSlide";
 import VisualDnaNarrativeSlide from "@/components/slides/VisualDnaNarrativeSlide";
-import VisualDnaGeometricMtbSlide from "@/components/slides/VisualDnaGeometricMtbSlide";
-import VisualDnaNarrativeMtbSlide from "@/components/slides/VisualDnaNarrativeMtbSlide";
-import VisualDnaGeometricMreSlide from "@/components/slides/VisualDnaGeometricMreSlide";
-import VisualDnaNarrativeMreSlide from "@/components/slides/VisualDnaNarrativeMreSlide";
 import PhilosophySlide from "@/components/slides/PhilosophySlide";
 import BrandKitSpecsSlide from "@/components/slides/BrandKitSpecsSlide";
 import LogoUsageSlide from "@/components/slides/LogoUsageSlide";
@@ -35,22 +31,14 @@ export default function SlidePage() {
         // Philosophy slide for each brand
         slides.push(<PhilosophySlide key={`${brand.id}-philosophy`} brand={brand} />);
 
-        // Visual DNA slides based on brand
-        if (brand.id === "sqc") {
-            slides.push(<VisualDnaNarrativeSlide key={`${brand.id}-dna-narrative`} brand={brand} />);
-            slides.push(<VisualDnaGeometricSlide key={`${brand.id}-dna-geometric`} brand={brand} />);
-        } else if (brand.id === "mtb") {
-            slides.push(<VisualDnaNarrativeMtbSlide key={`${brand.id}-dna-narrative`} brand={brand} />);
-            slides.push(<VisualDnaGeometricMtbSlide key={`${brand.id}-dna-geometric`} brand={brand} />);
-        } else if (brand.id === "mre") {
-            slides.push(<VisualDnaNarrativeMreSlide key={`${brand.id}-dna-narrative`} brand={brand} />);
-            slides.push(<VisualDnaGeometricMreSlide key={`${brand.id}-dna-geometric`} brand={brand} />);
-        }
+        // Visual DNA slides
+        slides.push(<VisualDnaNarrativeSlide key={`${brand.id}-dna-narrative`} brand={brand} />);
+        slides.push(<VisualDnaGeometricSlide key={`${brand.id}-dna-geometric`} brand={brand} />);
 
         // Brand kit slides
         slides.push(<BrandKitSpecsSlide key={`${brand.id}-specs`} brand={brand} />);
-        slides.push(<LogoUsageSlide key={`${brand.id}-usage`} brand={brand} />);
-        slides.push(<LogoImplementationSlide key={`${brand.id}-implementation`} brand={brand} />);
+        slides.push(<LogoUsageSlide key={`${brand.id}-usage`} brand={brand} variant="full-shape" />);
+        slides.push(<LogoImplementationSlide key={`${brand.id}-implementation`} brand={brand} variant="full-shape" />);
     });
 
     // Closing section

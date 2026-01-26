@@ -3,10 +3,9 @@
 import { motion } from "framer-motion";
 import { ArrowRight, Building2, Zap, Globe, Shield } from "lucide-react";
 import Image from "next/image";
-import { useSlideNavigation } from "@/contexts/SlideContext";
+import Link from "next/link";
 
 export default function ArchitectureSlide() {
-    const { goToSlide } = useSlideNavigation();
 
     return (
         <div className="flex flex-col w-full h-full bg-slate-50 overflow-hidden select-none relative">
@@ -35,8 +34,8 @@ export default function ArchitectureSlide() {
                         viewport={{ once: true }}
                         className="relative w-full max-w-5xl mx-auto"
                     >
-                        <div
-                            onClick={() => goToSlide(2)}
+                        <Link
+                            href="/showcase/sqc"
                             className="group cursor-pointer bg-white border border-slate-200 rounded-[2.5rem] p-4 shadow-sm hover:shadow-2xl hover:border-blue-500/50 transition-all duration-500 flex flex-col md:flex-row gap-8 items-center"
                         >
                             {/* Image with dedicated frame */}
@@ -71,7 +70,7 @@ export default function ArchitectureSlide() {
                                     </button>
                                 </div>
                             </div>
-                        </div>
+                        </Link>
 
                         {/* Visual Connector Line */}
                         <div className="absolute -bottom-10 left-1/2 w-px h-10 bg-gradient-to-b from-blue-600 to-slate-300" />
@@ -94,30 +93,31 @@ export default function ArchitectureSlide() {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ delay: 0.1 }}
-                            onClick={() => goToSlide(6)}
                             className="group cursor-pointer bg-white border border-slate-200 rounded-[2rem] p-3 shadow-sm hover:shadow-xl hover:border-blue-500/30 transition-all duration-500"
                         >
-                            <div className="relative h-36 overflow-hidden rounded-[1.4rem] bg-slate-100 mb-5">
-                                <Image
-                                    src="/images/architecture/mtb-building.jpg"
-                                    alt="MTB"
-                                    fill
-                                    className="object-cover group-hover:scale-110 transition-transform duration-1000"
-                                    unoptimized
-                                />
-                                <div className="absolute top-3 left-3">
-                                    <span className="text-[8px] font-black uppercase text-white tracking-widest bg-blue-600/90 backdrop-blur px-3 py-1.5 rounded-lg shadow-lg">Upstream</span>
+                            <Link href="/showcase/mtb" className="block">
+                                <div className="relative h-36 overflow-hidden rounded-[1.4rem] bg-slate-100 mb-5">
+                                    <Image
+                                        src="/images/architecture/mtb-building.jpg"
+                                        alt="MTB"
+                                        fill
+                                        className="object-cover group-hover:scale-110 transition-transform duration-1000"
+                                        unoptimized
+                                    />
+                                    <div className="absolute top-3 left-3">
+                                        <span className="text-[8px] font-black uppercase text-white tracking-widest bg-blue-600/90 backdrop-blur px-3 py-1.5 rounded-lg shadow-lg">Upstream</span>
+                                    </div>
                                 </div>
-                            </div>
-                            <div className="px-4 pb-4 space-y-2 text-center">
-                                <h4 className="font-bold text-slate-800 tracking-tight flex items-center justify-center gap-2">
-                                    <Zap className="w-4 h-4 text-blue-600" />
-                                    Matahari Timur Bumi
-                                </h4>
-                                <p className="text-[11px] text-slate-500 font-light leading-relaxed px-2">
-                                    Penceritaan energi awal melalui mineral dan energi terbarukan.
-                                </p>
-                            </div>
+                                <div className="px-4 pb-4 space-y-2 text-center">
+                                    <h4 className="font-bold text-slate-800 tracking-tight flex items-center justify-center gap-2">
+                                        <Zap className="w-4 h-4 text-blue-600" />
+                                        Matahari Timur Bumi
+                                    </h4>
+                                    <p className="text-[11px] text-slate-500 font-light leading-relaxed px-2">
+                                        Penceritaan energi awal melalui mineral dan energi terbarukan.
+                                    </p>
+                                </div>
+                            </Link>
                         </motion.div>
 
                         {/* MRE CARD */}
@@ -126,30 +126,31 @@ export default function ArchitectureSlide() {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ delay: 0.2 }}
-                            onClick={() => goToSlide(10)}
                             className="group cursor-pointer bg-white border border-slate-200 rounded-[2rem] p-3 shadow-sm hover:shadow-xl hover:border-blue-500/30 transition-all duration-500"
                         >
-                            <div className="relative h-36 overflow-hidden rounded-[1.4rem] bg-slate-100 mb-5">
-                                <Image
-                                    src="/images/architecture/mre-plant.jpg"
-                                    alt="MRE"
-                                    fill
-                                    className="object-cover group-hover:scale-110 transition-transform duration-1000"
-                                    unoptimized
-                                />
-                                <div className="absolute top-3 left-3">
-                                    <span className="text-[8px] font-black uppercase text-white tracking-widest bg-blue-600/90 backdrop-blur px-3 py-1.5 rounded-lg shadow-lg">Authority</span>
+                            <Link href="/showcase/mre" className="block">
+                                <div className="relative h-36 overflow-hidden rounded-[1.4rem] bg-slate-100 mb-5">
+                                    <Image
+                                        src="/images/architecture/mre-plant.jpg"
+                                        alt="MRE"
+                                        fill
+                                        className="object-cover group-hover:scale-110 transition-transform duration-1000"
+                                        unoptimized
+                                    />
+                                    <div className="absolute top-3 left-3">
+                                        <span className="text-[8px] font-black uppercase text-white tracking-widest bg-blue-600/90 backdrop-blur px-3 py-1.5 rounded-lg shadow-lg">Authority</span>
+                                    </div>
                                 </div>
-                            </div>
-                            <div className="px-4 pb-4 space-y-2 text-center">
-                                <h4 className="font-bold text-slate-800 tracking-tight flex items-center justify-center gap-2">
-                                    <Building2 className="w-4 h-4 text-blue-600" />
-                                    Mataram Royal Energi
-                                </h4>
-                                <p className="text-[11px] text-slate-500 font-light leading-relaxed px-2">
-                                    Otoritas pengelola aset energi strategis dan tata kelola kedaulatan.
-                                </p>
-                            </div>
+                                <div className="px-4 pb-4 space-y-2 text-center">
+                                    <h4 className="font-bold text-slate-800 tracking-tight flex items-center justify-center gap-2">
+                                        <Building2 className="w-4 h-4 text-blue-600" />
+                                        Mataram Royal Energi
+                                    </h4>
+                                    <p className="text-[11px] text-slate-500 font-light leading-relaxed px-2">
+                                        Otoritas pengelola aset energi strategis dan tata kelola kedaulatan.
+                                    </p>
+                                </div>
+                            </Link>
                         </motion.div>
 
                         {/* FUTURE / EXPANSION */}
