@@ -1,0 +1,69 @@
+"use client";
+
+import { useParams, useRouter } from "next/navigation";
+import { useEffect } from "react";
+import SlideDeck from "@/components/SlideDeck";
+import IntroSlide from "@/components/slides/IntroSlide";
+import ArchitectureSlide from "@/components/slides/ArchitectureSlide";
+import VisualDnaGeometricSlide from "@/components/slides/VisualDnaGeometricSlide";
+import VisualDnaNarrativeSlide from "@/components/slides/VisualDnaNarrativeSlide";
+import VisualDnaGeometricMtbSlide from "@/components/slides/VisualDnaGeometricMtbSlide";
+import VisualDnaNarrativeMtbSlide from "@/components/slides/VisualDnaNarrativeMtbSlide";
+import VisualDnaGeometricMreSlide from "@/components/slides/VisualDnaGeometricMreSlide";
+import VisualDnaNarrativeMreSlide from "@/components/slides/VisualDnaNarrativeMreSlide";
+import PhilosophySlide from "@/components/slides/PhilosophySlide";
+import BrandKitSpecsSlide from "@/components/slides/BrandKitSpecsSlide";
+import BrandKitAppSlide from "@/components/slides/BrandKitAppSlide";
+import ClosingSlide from "@/components/slides/ClosingSlide";
+import { brands } from "@/data/brands";
+
+export default function SlidePage() {
+    const params = useParams();
+    const router = useRouter();
+    const slideId = params?.id ? parseInt(params.id as string, 10) : 0;
+
+    // Build slides in presentation order
+    const slides: React.ReactNode[] = [
+        // Opening section
+        <IntroSlide key="intro" />,                           // 0: Welcome
+        <ArchitectureSlide key="architecture" />,             // 1: Brand Architecture
+    ];
+
+    // Generate slides for each brand
+    brands.forEach((brand) => {
+        // Philosophy slide for each brand
+        slides.push(<PhilosophySlide key={`${brand.id}-philosophy`} brand={brand} />);
+
+        // Visual DNA slides based on brand
+        if (brand.id === "sqc") {
+            slides.push(<VisualDnaNarrativeSlide key={`${brand.id}-dna-narrative`} brand={brand} />);
+            slides.push(<VisualDnaGeometricSlide key={`${brand.id}-dna-geometric`} brand={brand} />);
+        } else if (brand.id === "mtb") {
+            slides.push(<VisualDnaNarrativeMtbSlide key={`${brand.id}-dna-narrative`} brand={brand} />);
+            slides.push(<VisualDnaGeometricMtbSlide key={`${brand.id}-dna-geometric`} brand={brand} />);
+        } else if (brand.id === "mre") {
+            slides.push(<VisualDnaNarrativeMreSlide key={`${brand.id}-dna-narrative`} brand={brand} />);
+            slides.push(<VisualDnaGeometricMreSlide key={`${brand.id}-dna-geometric`} brand={brand} />);
+        }
+
+        // Brand kit slides
+        slides.push(<BrandKitSpecsSlide key={`${brand.id}-specs`} brand={brand} />);
+        slides.push(<BrandKitAppSlide key={`${brand.id}-app`} brand={brand} />);
+    });
+
+    // Closing section
+    slides.push(<ClosingSlide key="closing" />);
+
+    // Redirect to first slide if invalid
+    useEffect(() => {
+        if (isNaN(slideId) || slideId < 0 || slideId >= slides.length) {
+            router.replace("/slide/0");
+        }
+    }, [slideId, slides.length, router]);
+
+    return (
+        <main className="w-screen h-screen">
+            <SlideDeck slides={slides} initialSlide={slideId} />
+        </main>
+    );
+}
