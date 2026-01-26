@@ -13,7 +13,8 @@ import VisualDnaGeometricMreSlide from "@/components/slides/VisualDnaGeometricMr
 import VisualDnaNarrativeMreSlide from "@/components/slides/VisualDnaNarrativeMreSlide";
 import PhilosophySlide from "@/components/slides/PhilosophySlide";
 import BrandKitSpecsSlide from "@/components/slides/BrandKitSpecsSlide";
-import BrandKitAppSlide from "@/components/slides/BrandKitAppSlide";
+import LogoUsageSlide from "@/components/slides/LogoUsageSlide";
+import LogoImplementationSlide from "@/components/slides/LogoImplementationSlide";
 import ClosingSlide from "@/components/slides/ClosingSlide";
 import { brands } from "@/data/brands";
 
@@ -48,7 +49,8 @@ export default function SlidePage() {
 
         // Brand kit slides
         slides.push(<BrandKitSpecsSlide key={`${brand.id}-specs`} brand={brand} />);
-        slides.push(<BrandKitAppSlide key={`${brand.id}-app`} brand={brand} />);
+        slides.push(<LogoUsageSlide key={`${brand.id}-usage`} brand={brand} />);
+        slides.push(<LogoImplementationSlide key={`${brand.id}-implementation`} brand={brand} />);
     });
 
     // Closing section
