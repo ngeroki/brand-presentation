@@ -108,7 +108,7 @@ export default function LogoUsageSlide({ brand, variant }: { brand: BrandData; v
                                     {/* Logo Case */}
                                     <div className="relative w-56 h-56 md:w-80 md:h-80 filter drop-shadow-[0_45px_70px_rgba(15,23,42,0.2)] group-hover:scale-110 transition-transform duration-1000">
                                         <Image
-                                            src={brand.logos.nobgFull}
+                                            src={variant === 'full-shape' ? brand.logos.nobgFull : brand.logos.nobgGeo}
                                             alt="Clear Space Diagram"
                                             fill
                                             className="object-contain"

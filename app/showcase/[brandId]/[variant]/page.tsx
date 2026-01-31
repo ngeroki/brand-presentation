@@ -8,6 +8,18 @@ import LogoUsageSlide from "@/components/slides/LogoUsageSlide";
 import VisualDnaNarrativeSlide from "@/components/slides/VisualDnaNarrativeSlide";
 import VisualDnaGeometricSlide from "@/components/slides/VisualDnaGeometricSlide";
 
+// Generate static paths for all brand/variant combinations
+export function generateStaticParams() {
+    const variants = ['full-shape', 'geometric'] as const;
+
+    return brands.flatMap((brand) =>
+        variants.map((variant) => ({
+            brandId: brand.id,
+            variant: variant,
+        }))
+    );
+}
+
 export default function VariantPage() {
     const params = useParams();
     const brandId = params?.brandId as string;

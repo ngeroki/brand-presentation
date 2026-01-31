@@ -9,6 +9,13 @@ import { motion, AnimatePresence } from "framer-motion";
 import { sqc, SQCBackground, SQCTag } from "@/styles/sqc-theme";
 import clsx from "clsx";
 
+// Generate static paths for all brands
+export function generateStaticParams() {
+    return brands.map((brand) => ({
+        brandId: brand.id,
+    }));
+}
+
 export default function BrandComparisonPage() {
     const params = useParams();
     const brandId = params?.brandId as string;

@@ -70,17 +70,12 @@ export const mockupImages: Record<string, Record<string, string[]>> = {
         'geometric': [
             'ChatGPT Image Jan 28, 2026, 01_41_18 PM.png',
             'ChatGPT Image Jan 28, 2026, 01_50_36 PM.png',
-            'desk.png',
-            'Gemini_Generated_Image_a3tixoa3tixoa3ti.png',
             'Gemini_Generated_Image_cb93llcb93llcb93.png',
             'Gemini_Generated_Image_ghh2joghh2joghh2.png',
             'Gemini_Generated_Image_jmo1s8jmo1s8jmo1.png',
             'Gemini_Generated_Image_v7a1jnv7a1jnv7a1.png',
             'Gemini_Generated_Image_xzon5jxzon5jxzon.png',
-            'Gemini_Generated_Image_yz1peeyz1peeyz1p.png',
-            'laptop.png',
-            'notebook.png',
-            'overview.png'
+            'Gemini_Generated_Image_yz1peeyz1peeyz1p.png'
         ]
     }
 };
