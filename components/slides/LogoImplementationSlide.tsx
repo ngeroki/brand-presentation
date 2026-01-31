@@ -1,170 +1,157 @@
 "use client";
 
 import Image from "next/image";
+import { motion } from "framer-motion";
 import { BrandData } from "@/data/brands";
+import { sqc, SQCBackground, SQCTag } from "@/styles/sqc-theme";
+import { mockupImages } from "@/data/mockups";
+import { Layout, Maximize2, ShieldCheck, Eye } from "lucide-react";
 
 export default function LogoImplementationSlide({ brand, variant }: { brand: BrandData; variant: 'full-shape' | 'geometric' }) {
-    // Use transparent logos for implementation mockups
+    // Logo variations for metadata
     const activeLogo = variant === 'full-shape' ? brand.logos.transparentFull : brand.logos.transparentGeo;
-    const whiteLogoForDark = variant === 'full-shape' ? brand.logos.transparentFullWhite : brand.logos.transparentGeoWhite;
+
+    // Path prefix for images
+    const customPathPrefix = `/mockups/${brand.id}/${variant}`;
+    const accentColor = brand.colors.accent || "#C5A572";
+
+    // Get mockup images for this brand/variant
+    const availableMockups = mockupImages[brand.id]?.[variant] || [];
 
     return (
-        <div className="flex flex-col w-full h-full bg-[#EBEBEB] text-[#1A1A1A] font-sans selection:bg-[#1A1A1A] selection:text-[#EBEBEB] overflow-hidden select-none">
+        <div className="relative min-h-screen bg-[#0B1221] text-white selection:bg-[#C5A572] selection:text-[#0B1221] overflow-hidden flex flex-col">
+            <SQCBackground />
 
-            {/* CLEAN CENTERED HEADER */}
-            <header className="w-full pt-20 pb-16 text-center">
-                <h2 className="text-2xl font-medium tracking-[0.3em] text-[#333333] uppercase">Implementation</h2>
-            </header>
+            {/* AMBIENCE */}
+            <div className="fixed inset-0 pointer-events-none z-0">
+                <div className="absolute inset-0 opacity-[0.03]"
+                    style={{
+                        backgroundImage: `linear-gradient(to right, ${accentColor} 1px, transparent 1px), linear-gradient(to bottom, ${accentColor} 1px, transparent 1px)`,
+                        backgroundSize: '120px 120px',
+                        maskImage: 'radial-gradient(circle at 50% 50%, black, transparent 90%)'
+                    }}
+                />
+            </div>
 
-            {/* THREE COLUMN SHOWCASE */}
-            <main className="flex-1 w-full max-w-[1600px] mx-auto flex flex-col lg:flex-row items-center justify-between gap-12 px-12 lg:px-20 mb-20">
+            <main className="relative z-10 w-full max-w-[1600px] mx-auto px-8 pt-16 pb-32 flex flex-col items-center">
 
-                {/* 1. STATIONERY (Left) */}
-                <div className="flex-1 h-full flex items-center justify-center relative">
-                    <div className="relative w-full aspect-square max-w-[450px]">
-                        {/* Letterhead Base */}
-                        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[300px] h-[400px] bg-white shadow-lg border border-zinc-200/50 p-8 flex flex-col items-center">
-                            <div className="w-20 h-20 relative mt-4">
-                                <Image src={activeLogo} alt="Letterhead" fill className="object-contain" unoptimized />
-                            </div>
-                            <div className="mt-auto w-full border-t border-zinc-100 pt-4 flex justify-between items-center opacity-30">
-                                <div className="w-16 h-1 bg-zinc-200 rounded" />
-                                <div className="w-3 h-3 bg-zinc-100 rounded-full" />
-                            </div>
-                        </div>
-
-                        {/* Envelope */}
-                        <div className="absolute bottom-12 left-1/2 translate-x-4 w-[240px] h-[140px] bg-white shadow-xl flex flex-col overflow-hidden">
-                            <div
-                                className="w-full h-1/3"
-                                style={{
-                                    backgroundColor: brand.colors.primary,
-                                    clipPath: 'polygon(0 0, 100% 0, 50% 100%)'
-                                }}
-                            />
-                            <div className="flex-1 flex items-center justify-center p-4">
-                                <div className="w-24 h-12 relative opacity-40">
-                                    <Image src={activeLogo} alt="Logo" fill className="object-contain" unoptimized />
-                                </div>
-                            </div>
-                        </div>
-
-                        {/* Business Cards */}
-                        <div
-                            className="absolute bottom-24 left-4 w-48 h-28 rounded shadow-2xl p-6 flex flex-col justify-between"
-                            style={{ backgroundColor: brand.colors.primary }}
-                        >
-                            <div className="w-20 h-10 relative">
-                                <Image src={whiteLogoForDark} alt="Card Logo" fill className="object-contain object-left" unoptimized />
-                            </div>
-                            <div className="w-12 h-1 bg-white/20 rounded" />
-                        </div>
-                        <div className="absolute bottom-8 left-4 w-48 h-28 bg-white border border-zinc-200 rounded shadow-lg p-6 flex flex-col justify-between transform -rotate-1">
-                            <div className="w-20 h-10 relative">
-                                <Image src={activeLogo} alt="Card Logo" fill className="object-contain object-left" unoptimized />
-                            </div>
-                            <div className="w-12 h-1 bg-zinc-100 rounded" />
-                        </div>
-                    </div>
-                </div>
-
-                {/* 2. LAPTOP (Center) */}
-                <div className="flex-1 h-full flex items-center justify-center">
-                    <div className="relative w-full max-w-[600px] flex flex-col items-center">
-                        {/* MacBook Pro Styled Laptop */}
-                        <div className="relative w-full aspect-[1.6/1] bg-[#1a1a1a] p-2 rounded-t-[1.5rem] shadow-2xl border border-white/5">
-                            <div className="w-full h-full bg-[#fdfdfd] rounded-lg overflow-hidden flex flex-col">
-                                {/* Web Header */}
-                                <div className="h-10 bg-[#f5f5f5] border-b border-zinc-200 flex items-center px-4 justify-between">
-                                    <div className="w-20 h-7 relative">
-                                        <Image src={activeLogo} alt="Logo" fill className="object-contain object-left" unoptimized />
-                                    </div>
-                                    <div className="flex gap-4">
-                                        <div className="w-8 h-1 bg-zinc-300 rounded" />
-                                        <div className="w-8 h-1 bg-zinc-300 rounded" />
-                                        <div className="w-8 h-1 bg-zinc-300 rounded" />
-                                    </div>
-                                </div>
-                                {/* Web Hero */}
-                                <div className="flex-1 flex flex-col items-center justify-center bg-white p-12 text-center relative overflow-hidden">
-                                    <div
-                                        className="absolute inset-0 opacity-[0.03]"
-                                        style={{
-                                            backgroundImage: `linear-gradient(to right, ${brand.colors.primary} 1px, transparent 1px), linear-gradient(to bottom, ${brand.colors.primary} 1px, transparent 1px)`,
-                                            backgroundSize: '20px 20px'
-                                        }}
-                                    />
-                                    <div
-                                        className="w-28 h-28 rounded shadow-xl flex items-center justify-center mb-6"
-                                        style={{ backgroundColor: brand.colors.primary }}
-                                    >
-                                        <Image src={whiteLogoForDark} alt="Logo" width={64} height={64} unoptimized />
-                                    </div>
-                                    <h3 className="text-xl font-bold tracking-tight text-[#333333] mb-4 uppercase">{brand.name}</h3>
-                                    <div className="flex gap-2">
-                                        <div className="w-32 h-2 bg-zinc-100 rounded-full" />
-                                    </div>
-                                </div>
-                                {/* Web Body Cards */}
-                                <div className="h-32 bg-[#f9f9f9] border-t border-zinc-100 grid grid-cols-4 gap-4 p-4">
-                                    <div className="bg-white rounded border border-zinc-200 shadow-sm" />
-                                    <div className="bg-white rounded border border-zinc-200 shadow-sm" />
-                                    <div className="bg-white rounded border border-zinc-200 shadow-sm" />
-                                    <div className="bg-white rounded border border-zinc-200 shadow-sm" />
-                                </div>
-                            </div>
-                        </div>
-                        {/* Laptop Base */}
-                        <div className="w-[104%] h-3 bg-[#a5a5a5] rounded-b-xl relative shadow-2xl">
-                            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-20 h-1.5 bg-[#8e8e8e] rounded-b-lg opacity-50" />
-                        </div>
-                    </div>
-                </div>
-
-                {/* 3. MOBILE (Right) */}
-                <div className="flex-1 h-full flex items-center justify-center gap-12">
-                    {/* Device Dark */}
-                    <div
-                        className="w-[160px] h-[340px] rounded-[2.5rem] shadow-2xl p-2.5 relative flex flex-col items-center justify-center border-[6px] border-[#1a1a1a]"
-                        style={{ backgroundColor: brand.colors.primary }}
+                {/* HEADER - Cinematic Gallery Introduction */}
+                <header className="w-full flex flex-col items-center text-center space-y-12 mb-32">
+                    <motion.div
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ duration: 0.8 }}
                     >
-                        <div className="absolute top-2 w-14 h-4 bg-[#1a1a1a] rounded-full z-10" />
-                        <div className="w-24 h-24 relative z-10">
-                            <Image src={whiteLogoForDark} alt="Logo" fill className="object-contain" unoptimized />
-                        </div>
+                        <SQCTag className="px-8 py-2 bg-white/5 border-white/10 backdrop-blur-2xl">
+                            <span className="flex items-center gap-3">
+                                <Eye className="w-4 h-4 text-[#C5A572]" />
+                                Real-World Manifestation Gallery
+                            </span>
+                        </SQCTag>
+                    </motion.div>
+
+                    <div className="space-y-6">
+                        <h1 className="text-6xl lg:text-[9rem] font-black uppercase tracking-[calc(-0.06em)] leading-[0.8] text-white">
+                            Logo <br />
+                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#C5A572] to-[#EBB218] filter drop-shadow-[0_0_30px_rgba(197,165,114,0.3)]">Implementation</span>
+                        </h1>
+                        <p className="max-w-4xl mx-auto text-xl lg:text-3xl font-light leading-relaxed text-white/30 italic">
+                            Validasi visual {brand.name} pada ekosistem operasional melalui pendekatan <span className="font-black text-white italic px-2">{variant === 'full-shape' ? 'Narrative (Full Shape)' : 'Technical (Geometric)'}</span>.
+                        </p>
                     </div>
 
-                    {/* Device Light */}
-                    <div className="w-[180px] h-[380px] bg-[#1a1a1a] rounded-[2.5rem] shadow-[40px_40px_100px_rgba(0,0,0,0.1)] p-2.5 relative flex flex-col border-[6px] border-[#1a1a1a]">
-                        <div className="absolute top-2 left-1/2 -translate-x-1/2 w-16 h-4 bg-[#1a1a1a] rounded-full z-10" />
-                        <div className="flex-1 bg-white rounded-[2rem] overflow-hidden flex flex-col">
-                            <div className="h-12 border-b border-zinc-50 px-4 flex items-center justify-between">
-                                <div className="w-16 h-10 relative opacity-80">
-                                    <Image src={activeLogo} alt="Logo" fill className="object-contain object-left" unoptimized />
-                                </div>
-                                <div className="w-6 h-6 rounded-full bg-zinc-100" />
-                            </div>
-                            <div className="p-6 space-y-4">
-                                <div className="h-24 rounded-xl bg-zinc-50 flex items-center justify-center">
-                                    <div className="w-20 h-20 relative opacity-10">
-                                        <Image src={activeLogo} alt="Logo" fill className="object-contain" unoptimized />
+                    <div className="flex gap-4">
+                        <div className="px-6 py-2 border border-white/10 rounded-xl text-[10px] font-mono font-black tracking-widest uppercase text-white/20">VARIANT: {variant.toUpperCase()}</div>
+                        <div className="px-6 py-2 border border-white/10 rounded-xl text-[10px] font-mono font-black tracking-widest uppercase text-white/20">REDR: HIGH_FIDELITY</div>
+                    </div>
+                </header>
+
+                {/* MASONRY GALLERY - Premium Cards */}
+                <div className="w-full max-w-7xl mx-auto">
+                    {availableMockups.length > 0 ? (
+                        <div className="columns-1 md:columns-2 lg:columns-3 gap-10 space-y-10">
+                            {availableMockups.map((mockup, index) => (
+                                <motion.div
+                                    key={index}
+                                    initial={{ opacity: 0, y: 50 }}
+                                    whileInView={{ opacity: 1, y: 0 }}
+                                    viewport={{ once: true }}
+                                    transition={{ delay: index * 0.1, duration: 1, ease: [0.16, 1, 0.3, 1] }}
+                                    className="break-inside-avoid relative group"
+                                >
+                                    {/* Card Master */}
+                                    <div className="relative rounded-[3rem] overflow-hidden bg-[#0F1629]/60 border border-white/10 shadow-[0_50px_100px_rgba(0,0,0,0.5)] transition-all duration-1000 group-hover:border-[#C5A572]/40 group-hover:shadow-[0_0_50px_rgba(197,165,114,0.1)]">
+
+                                        {/* Image Container */}
+                                        <div className="relative w-full overflow-hidden aspect-[3/4]">
+                                            <Image
+                                                src={`${customPathPrefix}/${mockup}`}
+                                                alt={`${brand.name} Implementation ${index + 1}`}
+                                                fill
+                                                className="object-cover transition-transform duration-[2000ms] group-hover:scale-110"
+                                                unoptimized
+                                            />
+                                            {/* Hover HUD Overlay */}
+                                            <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-700 flex flex-col justify-between p-10">
+                                                <div className="flex justify-between items-start">
+                                                    <div className="w-12 h-12 bg-white/10 backdrop-blur-3xl rounded-2xl flex items-center justify-center border border-white/20 text-white/60">
+                                                        <Maximize2 className="w-6 h-6" />
+                                                    </div>
+                                                    <div className="px-4 py-2 bg-[#C5A572] text-[#0B1221] rounded-xl text-[10px] font-black uppercase tracking-widest shadow-xl">
+                                                        Live View
+                                                    </div>
+                                                </div>
+
+                                                <div className="space-y-4 translate-y-8 group-hover:translate-y-0 transition-transform duration-700 delay-100">
+                                                    <div className="flex items-center gap-3">
+                                                        <ShieldCheck className="w-5 h-5 text-[#C5A572]" />
+                                                        <span className="text-[11px] font-mono font-black text-[#C5A572] tracking-[0.3em] uppercase">Auth_Verified</span>
+                                                    </div>
+                                                    <h4 className="text-3xl font-black text-white uppercase tracking-tighter">Manifestation Node {index + 1 < 10 ? `0${index + 1}` : index + 1}</h4>
+                                                    <div className="h-px w-full bg-gradient-to-r from-white/40 to-transparent" />
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        {/* Meta Strip - Technical Footer */}
+                                        <div className="px-10 py-8 bg-[#0B1221] flex justify-between items-center group-hover:bg-[#0F1629] transition-colors">
+                                            <div className="flex flex-col gap-1">
+                                                <span className="text-[9px] font-mono text-white/30 uppercase tracking-widest font-black">Environment</span>
+                                                <span className="text-xs font-black text-white/80 uppercase tracking-wider">Operational Context</span>
+                                            </div>
+                                            <div className="w-10 h-10 rounded-full border border-white/5 flex items-center justify-center">
+                                                <span className="text-[10px] font-mono text-white/30">{index + 1 < 10 ? `0${index + 1}` : index + 1}</span>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                                <div className="w-full h-8 bg-zinc-100 rounded" />
-                                <div className="w-3/4 h-3 bg-zinc-50 rounded" />
-                                <div className="grid grid-cols-2 gap-3 pt-4">
-                                    <div className="h-16 bg-zinc-50 rounded-lg shadow-sm" />
-                                    <div className="h-16 bg-zinc-50 rounded-lg shadow-sm" />
-                                </div>
-                            </div>
+                                </motion.div>
+                            ))}
+                        </div>
+                    ) : (
+                        <div className="w-full text-center py-40 border-2 border-dashed border-white/5 rounded-[4rem]">
+                            <p className="text-xl text-white/20 font-light italic">
+                                [ System Error: Manifestation assets for this node currently offline ]
+                            </p>
+                        </div>
+                    )}
+                </div>
+
+                {/* FOOTER BAR */}
+                <footer className="w-full mt-32 pt-16 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-12 bg-black/20 backdrop-blur-xl p-12 rounded-[4rem]">
+                    <div className="flex items-center gap-6 text-white/20">
+                        <Layout className="w-6 h-6" />
+                        <span className="text-[10px] font-mono font-black tracking-widest uppercase">Visual Proof Logic // Version 2.0.1</span>
+                    </div>
+
+                    <div className="flex items-center gap-12">
+                        <div className="flex flex-col items-end gap-2 text-right">
+                            <span className="text-[11px] font-black text-white uppercase tracking-widest">SQC Asset Stewardship</span>
+                            <span className="text-[9px] font-mono text-white/20 italic uppercase tracking-widest">"Validated through physical existence"</span>
                         </div>
                     </div>
-                </div>
+                </footer>
 
             </main>
-
-            {/* SPACER SECTION */}
-            <div className="h-20" />
         </div>
     );
 }

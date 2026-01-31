@@ -1,213 +1,238 @@
+"use client";
+
 import Image from "next/image";
 import { BrandData, brands } from "@/data/brands";
 import { motion } from "framer-motion";
-import { ArrowRight, Minus } from "lucide-react";
+import { ArrowRight, Minus, Compass, Cpu, Target } from "lucide-react";
 import { useSlideNavigation } from "@/contexts/SlideContext";
+import { sqc, SQCBackground, SQCTag } from "@/styles/sqc-theme";
 
 export default function PhilosophySlide({ brand }: { brand: BrandData }) {
     const { goToSlide } = useSlideNavigation();
 
     // Calculate indices dynamically based on the current slide sequence
-    // Slide order: Intro(0), Architecture(1), then for each brand: Philosophy, DNANarrative, DNAGeometric, Specs, App
     const brandIndex = brands.findIndex(b => b.id === brand.id);
-
-    // Each brand has 5 slides: Philosophy, DNANarrative, DNAGeometric, Specs, App
-    // Starting at index 2 (after Intro and Architecture)
     const brandStartIdx = 2 + (brandIndex * 5);
-    const narrativeIndex = brandStartIdx + 1;  // Philosophy + 1
-    const geometricIndex = brandStartIdx + 2;  // Philosophy + 2
+    const narrativeIndex = brandStartIdx + 1;
+    const geometricIndex = brandStartIdx + 2;
 
-    // Conditionally set theme based on brand (requested for SQC and MRE)
-    const isReverted = brand.id === "sqc" || brand.id === "mre";
-
-    // Helper functions for clean navigation
     const navigateToNarrative = () => goToSlide(narrativeIndex);
     const navigateToGeometric = () => goToSlide(geometricIndex);
 
+    const accentColor = brand.colors.accent || "#C5A572";
+
     return (
-        <div className="flex flex-col w-full min-h-full bg-white text-zinc-900 font-sans selection:bg-[#C5A572] selection:text-white relative">
+        <div className="relative min-h-screen bg-[#0B1221] text-white selection:bg-[#C5A572] selection:text-[#0B1221] overflow-hidden flex flex-col">
+            <SQCBackground />
 
-            {/* BRAND ESSENCE: Centered Symmetrical Header */}
-            {brand.brandEssence && (
-                <div className="w-full bg-white pt-12 pb-8 px-12 lg:px-16 z-20 relative shrink-0">
-                    <div className="max-w-4xl mx-auto flex flex-col items-center text-center space-y-4">
-                        <motion.div
-                            initial={{ opacity: 0, y: -10 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            className="flex items-center gap-3"
-                        >
-                            <div className="h-px w-8 bg-blue-600/30" />
-                            <span className="text-[10px] uppercase font-black tracking-[0.4em] text-blue-600">{brand.brandEssence.title}</span>
-                            <div className="h-px w-8 bg-blue-600/30" />
-                        </motion.div>
+            {/* AMBIENT BACKGROUND */}
+            <div className="fixed inset-0 pointer-events-none z-0">
+                <div className="absolute inset-0 opacity-[0.03]"
+                    style={{
+                        backgroundImage: `linear-gradient(to right, ${accentColor} 1px, transparent 1px), linear-gradient(to bottom, ${accentColor} 1px, transparent 1px)`,
+                        backgroundSize: '100px 100px',
+                        maskImage: 'radial-gradient(circle at 50% 50%, black, transparent 90%)'
+                    }}
+                />
+                <motion.div
+                    animate={{
+                        scale: [1, 1.2, 1],
+                        opacity: [0.1, 0.15, 0.1]
+                    }}
+                    transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
+                    className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[60vw] h-[60vw] rounded-full blur-[150px]"
+                    style={{ backgroundColor: accentColor }}
+                />
+            </div>
 
-                        <h1 className="text-4xl lg:text-6xl font-black tracking-tighter text-zinc-900 uppercase italic leading-tight">
-                            {brand.brandEssence.tagline}
-                        </h1>
+            {/* HEADER - BRAND ESSENCE */}
+            <header className="relative z-10 w-full pt-16 flex flex-col items-center text-center px-8 flex-shrink-0">
+                <motion.div
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.8 }}
+                >
+                    <SQCTag className="px-6 py-2 bg-white/5 border-white/10 backdrop-blur-2xl">
+                        <span className="flex items-center gap-3">
+                            <div className="w-2 h-2 rounded-full animate-pulse" style={{ backgroundColor: accentColor }} />
+                            {brand.brandEssence?.title || "Brand Profile"}
+                        </span>
+                    </SQCTag>
+                </motion.div>
 
-                        <div className="max-w-2xl mx-auto">
-                            <p className="text-sm lg:text-base text-zinc-500 font-light leading-relaxed">
-                                {brand.brandEssence.description}
-                            </p>
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.2, duration: 1 }}
+                    className="mt-8 space-y-6"
+                >
+                    <h1 className="text-5xl lg:text-[7rem] font-black tracking-[calc(-0.06em)] leading-[0.8] uppercase max-w-5xl mx-auto">
+                        {brand.brandEssence?.tagline || "MANIFESTASI NILAI"}
+                    </h1>
+                    <p className="max-w-3xl mx-auto text-lg lg:text-2xl font-light leading-relaxed text-white/30 italic">
+                        {brand.brandEssence?.description}
+                    </p>
+                </motion.div>
+
+                {/* Vertical Axis Line */}
+                <div className="mt-12 h-20 w-px bg-gradient-to-b from-[var(--brand-accent)] to-transparent opacity-50" style={{ ["--brand-accent" as any]: accentColor }} />
+            </header>
+
+            {/* SELECTION CHAMBERS */}
+            <div className="flex-1 w-full max-w-[1600px] mx-auto grid grid-cols-1 md:grid-cols-2 relative z-10 px-8 pb-16">
+
+                {/* OPTION A: NARRATIVE */}
+                <motion.div
+                    initial={{ opacity: 0, x: -50 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.5, duration: 1 }}
+                    className="group/narrative relative flex flex-col items-center justify-between py-12 px-8 lg:px-16"
+                >
+                    <div className="absolute inset-0 bg-white/[0.01] opacity-0 group-hover/narrative:opacity-100 transition-opacity duration-1000 rounded-[3rem] -z-10" />
+
+                    {/* Chamber Title */}
+                    <div className="text-center space-y-4">
+                        <div className="flex items-center justify-center gap-4 text-[#C5A572] font-mono text-[10px] font-black tracking-[0.5em] uppercase">
+                            <Compass className="w-4 h-4" />
+                            <span>System Variant A</span>
                         </div>
-
-                        {/* Visual Connector to the split below */}
-                        <div className="pt-4 flex flex-col items-center">
-                            <div className="w-px h-8 bg-gradient-to-b from-blue-600/50 to-transparent" />
-                        </div>
-                    </div>
-                </div>
-            )}
-
-            <div className="flex-1 flex flex-col md:flex-row w-full">
-                {/* LEFT PANEL: OPTION A (FULLY SHAPE) */}
-                <div className={`relative w-full md:w-1/2 min-h-[700px] flex flex-col justify-between p-12 lg:p-16 group/a overflow-hidden transition-colors duration-500 items-center text-center ${isReverted ? "bg-[#F7F3F0] text-zinc-900" : "bg-[#1A1F2B] text-white"
-                    }`}>
-                    {/* Decorative Pattern */}
-                    <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#C5A572] to-transparent" />
-
-                    {/* Header */}
-                    <div className="relative z-10 flex flex-col items-center gap-4">
-                        <motion.div
-                            initial={{ opacity: 0, y: -10 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.6 }}
-                            className="flex items-center gap-3"
-                        >
-                            <div className="h-px w-4 bg-[#C5A572]/30" />
-                            <span className="text-[10px] font-black uppercase tracking-[0.4em] text-[#C5A572]">Option A // Narrative</span>
-                            <div className="h-px w-4 bg-[#C5A572]/30" />
-                        </motion.div>
-                        <h2 className={`text-4xl lg:text-5xl font-black uppercase tracking-tighter ${isReverted ? "text-[#0B1221]" : "text-white"}`}>
-                            Fully Shape
+                        <h2 className="text-4xl lg:text-7xl font-black text-white uppercase tracking-tighter group-hover/narrative:tracking-widest transition-all duration-700">
+                            Narrative
                         </h2>
                     </div>
 
-                    {/* Logo Centerpiece - Now Clickable */}
-                    <div className="flex-1 w-full flex items-center justify-center py-12">
+                    {/* Logo Showcase Card */}
+                    <div className="relative w-full max-w-md aspect-square my-12 group/card perspective-2000">
                         <motion.button
                             onClick={navigateToNarrative}
-                            initial={{ opacity: 0, scale: 0.95 }}
-                            whileInView={{ opacity: 1, scale: 1 }}
-                            transition={{ duration: 0.8 }}
-                            className={`relative w-full max-w-[440px] aspect-square rounded-[2.5rem] overflow-hidden border p-3 shadow-[0_50px_100px_-20px_rgba(0,0,0,0.5)] transition-all duration-500 group/card ${isReverted
-                                ? "bg-white border-white shadow-zinc-200/50"
-                                : "bg-[#0B1221] border-white/5 shadow-black/80"
-                                } cursor-pointer active:scale-95`}
+                            whileHover={{ rotateY: -10, rotateX: 5, scale: 1.02 }}
+                            className="relative w-full h-full bg-[#0F1629]/60 backdrop-blur-3xl border border-white/5 rounded-[4rem] p-12 shadow-[0_40px_80px_rgba(0,0,0,0.5)] transition-all duration-700 overflow-hidden flex items-center justify-center"
                         >
+                            <div className="absolute inset-0 opacity-10 group-hover/card:opacity-20 transition-opacity duration-1000" style={{ backgroundImage: 'radial-gradient(circle, #fff 1px, transparent 1px)', backgroundSize: '32px 32px' }} />
+
                             <Image
-                                src={brand.logos.fullyShape}
-                                alt={`${brand.name} Fully Shape`}
-                                fill
-                                className="object-cover rounded-[2rem] group-hover/card:scale-110 transition-transform duration-1000 ease-out"
+                                src={brand.logos.nobgFull}
+                                alt={`${brand.name} Narrative`}
+                                width={800}
+                                height={800}
+                                className="w-full h-auto object-contain filter drop-shadow-[0_20px_40px_rgba(0,0,0,0.6)] group-hover/card:scale-110 transition-transform duration-1000"
                                 unoptimized
                             />
-                            <div className="absolute inset-0 rounded-[2rem] border border-white/5 pointer-events-none" />
 
-                            {/* Hover Overlay */}
-                            <div className="absolute inset-0 bg-black/0 group-hover/card:bg-black/5 transition-colors duration-300" />
+                            {/* HUD Tag */}
+                            <div className="absolute top-10 left-10 p-3 bg-white/5 border border-white/10 rounded-2xl text-[9px] font-mono tracking-widest text-[#C5A572] uppercase">DNA_CORE: 01</div>
                         </motion.button>
+
+                        {/* Glow and Reflection */}
+                        <div className="absolute -bottom-4 inset-x-8 h-8 bg-black/40 blur-2xl rounded-full opacity-0 group-hover/narrative:opacity-100 transition-opacity duration-700" />
                     </div>
 
-                    {/* Footer Content */}
-                    <div className="relative z-10 flex flex-col items-center gap-8">
-                        <div className="space-y-4 max-w-sm mx-auto">
-                            <p className="text-xs font-black text-[#C5A572] uppercase tracking-[0.2em] flex items-center justify-center gap-2">
-                                <Minus className="w-4 h-4 text-[#C5A572]/40" /> Filosofi Ikonik <Minus className="w-4 h-4 text-[#C5A572]/40" />
-                            </p>
-                            <p className={`text-base leading-relaxed font-medium mx-auto ${isReverted ? "text-zinc-500" : "text-zinc-400"}`}>
-                                {brand.philosophyBreakdown[0].description}
-                            </p>
-                        </div>
-
+                    {/* Chamber Footer */}
+                    <div className="flex flex-col items-center gap-10 max-w-sm text-center">
+                        <p className="text-lg text-white/40 font-light italic leading-relaxed">
+                            {brand.philosophyBreakdown[0].description}
+                        </p>
                         <button
                             onClick={navigateToNarrative}
-                            className={`flex items-center gap-4 px-10 py-5 rounded-2xl mx-auto group/btn transition-all shadow-xl ${isReverted
-                                ? "bg-[#0B1221] text-white hover:bg-[#1a2538] shadow-zinc-200"
-                                : "bg-[#C5A572] text-[#0B1221] hover:bg-[#d4b98c] shadow-black/20"
-                                } active:scale-95`}
+                            className="group/btn relative px-12 py-5 bg-[var(--brand-accent)] text-[#0B1221] rounded-2xl overflow-hidden shadow-2xl transition-all hover:scale-105 active:scale-95"
+                            style={{ ["--brand-accent" as any]: accentColor }}
                         >
-                            <span className="text-[10px] font-black uppercase tracking-[0.2em]">Cek DNA Visual</span>
-                            <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
+                            <div className="relative z-10 flex items-center gap-4 text-[11px] font-black uppercase tracking-[0.3em]">
+                                Explore DNA <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-2 transition-transform" />
+                            </div>
+                            <div className="absolute inset-0 bg-white opacity-0 group-hover/btn:opacity-20 transition-opacity" />
                         </button>
                     </div>
-                </div>
+                </motion.div>
 
-                {/* RIGHT PANEL: OPTION B (GEOMETRIC) */}
-                <div className={`relative w-full md:w-1/2 min-h-[700px] flex flex-col justify-between p-12 lg:p-16 group/b overflow-hidden transition-colors duration-500 items-center text-center ${isReverted ? "bg-[#1A1F2B] text-white" : "bg-[#F7F3F0] text-zinc-900"
-                    }`}>
-                    {/* Decorative Accent */}
-                    <div className="absolute top-0 right-0 w-full h-1 bg-gradient-to-l from-[#C5A572] to-transparent" />
+                {/* VERTICAL DIVIDER BAR */}
+                <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 h-2/3 w-px bg-gradient-to-b from-transparent via-white/10 to-transparent hidden md:block" />
 
-                    {/* Header */}
-                    <div className="relative z-10 flex flex-col items-center gap-4">
-                        <motion.div
-                            initial={{ opacity: 0, y: -10 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.6, delay: 0.1 }}
-                            className="flex items-center gap-3"
-                        >
-                            <div className="h-px w-4 bg-[#C5A572]/30" />
-                            <span className="text-[10px] font-black uppercase tracking-[0.4em] text-[#C5A572]">Option B // System</span>
-                            <div className="h-px w-4 bg-[#C5A572]/30" />
-                        </motion.div>
-                        <h2 className={`text-4xl lg:text-5xl font-black uppercase tracking-tighter ${isReverted ? "text-white" : "text-[#0B1221]"}`}>
+                {/* OPTION B: GEOMETRIC */}
+                <motion.div
+                    initial={{ opacity: 0, x: 50 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.6, duration: 1 }}
+                    className="group/geometric relative flex flex-col items-center justify-between py-12 px-8 lg:px-16"
+                >
+                    <div className="absolute inset-0 bg-blue-500/[0.01] opacity-0 group-hover/geometric:opacity-100 transition-opacity duration-1000 rounded-[3rem] -z-10" />
+
+                    {/* Chamber Title */}
+                    <div className="text-center space-y-4">
+                        <div className="flex items-center justify-center gap-4 text-blue-400 font-mono text-[10px] font-black tracking-[0.5em] uppercase">
+                            <Cpu className="w-4 h-4" />
+                            <span>System Variant B</span>
+                        </div>
+                        <h2 className="text-4xl lg:text-7xl font-black text-white uppercase tracking-tighter group-hover/geometric:tracking-widest transition-all duration-700">
                             Geometric
                         </h2>
                     </div>
 
-                    {/* Logo Centerpiece - Now Clickable */}
-                    <div className="flex-1 w-full flex items-center justify-center py-12">
+                    {/* Logo Showcase Card */}
+                    <div className="relative w-full max-w-md aspect-square my-12 group/card perspective-2000">
                         <motion.button
                             onClick={navigateToGeometric}
-                            initial={{ opacity: 0, scale: 0.95 }}
-                            whileInView={{ opacity: 1, scale: 1 }}
-                            transition={{ duration: 0.8, delay: 0.1 }}
-                            className={`relative w-full max-w-[440px] aspect-square rounded-[2.5rem] overflow-hidden border p-3 shadow-[0_50px_100px_-20px_rgba(0,0,0,0.5)] transition-all duration-500 group/card ${isReverted
-                                ? "bg-[#1A1F2B] border-white/5 shadow-black/80"
-                                : "bg-white border-white shadow-zinc-200/50"
-                                } cursor-pointer active:scale-95`}
+                            whileHover={{ rotateY: 10, rotateX: 5, scale: 1.02 }}
+                            className="relative w-full h-full bg-slate-900/60 backdrop-blur-3xl border border-blue-500/10 rounded-[4rem] p-12 shadow-[0_40px_80px_rgba(0,0,0,0.5)] transition-all duration-700 overflow-hidden flex items-center justify-center"
                         >
+                            {/* Technical Grid Overlay */}
+                            <div className="absolute inset-0 opacity-[0.05]"
+                                style={{
+                                    backgroundImage: `linear-gradient(to right, #3b82f6 1px, transparent 1px), linear-gradient(to bottom, #3b82f6 1px, transparent 1px)`,
+                                    backgroundSize: '40px 40px'
+                                }}
+                            />
+
                             <Image
-                                src={brand.logos.geometric}
+                                src={brand.logos.nobgGeo}
                                 alt={`${brand.name} Geometric`}
-                                fill
-                                className="object-cover rounded-[1.8rem] group-hover/card:scale-110 transition-transform duration-700 ease-out"
+                                width={800}
+                                height={800}
+                                className="w-full h-auto object-contain filter drop-shadow-[0_20px_40px_rgba(0,0,0,0.6)] group-hover/card:scale-110 transition-transform duration-1000"
                                 unoptimized
                             />
-                            <div className="absolute inset-0 rounded-[2rem] border border-white/5 pointer-events-none" />
 
-                            {/* Hover Overlay */}
-                            <div className="absolute inset-0 bg-white/0 group-hover/card:bg-white/5 transition-colors duration-300" />
+                            {/* HUD Tag */}
+                            <div className="absolute top-10 right-10 p-3 bg-blue-500/10 border border-blue-500/20 rounded-2xl text-[9px] font-mono tracking-widest text-blue-400 uppercase">SYS_REF: 02</div>
                         </motion.button>
+
+                        {/* Glow and Reflection */}
+                        <div className="absolute -bottom-4 inset-x-8 h-8 bg-black/40 blur-2xl rounded-full opacity-0 group-hover/geometric:opacity-100 transition-opacity duration-700" />
                     </div>
 
-                    {/* Footer Content */}
-                    <div className="relative z-10 flex flex-col items-center gap-8">
-                        <div className="space-y-4 max-w-sm mx-auto">
-                            <p className="text-xs font-black text-[#C5A572] uppercase tracking-[0.2em] flex items-center justify-center gap-2">
-                                <Minus className="w-4 h-4 text-[#C5A572]/40" /> Presisi Sistem <Minus className="w-4 h-4 text-[#C5A572]/40" />
-                            </p>
-                            <p className={`text-base leading-relaxed font-medium mx-auto ${isReverted ? "text-zinc-400" : "text-zinc-500"}`}>
-                                {brand.philosophyBreakdown[brand.philosophyBreakdown.length - 1].description}
-                            </p>
-                        </div>
-
+                    {/* Chamber Footer */}
+                    <div className="flex flex-col items-center gap-10 max-w-sm text-center">
+                        <p className="text-lg text-white/40 font-light italic leading-relaxed">
+                            {brand.philosophyBreakdown[brand.philosophyBreakdown.length - 1].description}
+                        </p>
                         <button
                             onClick={navigateToGeometric}
-                            className={`flex items-center gap-4 px-10 py-5 rounded-2xl mx-auto group/btn transition-all shadow-xl ${isReverted
-                                ? "bg-[#C5A572] text-[#0B1221] hover:bg-[#d4b98c] shadow-black/20"
-                                : "bg-[#0B1221] text-white hover:bg-[#1a2538] shadow-zinc-200"
-                                } active:scale-95`}
+                            className="group/btn relative px-12 py-5 bg-blue-600 text-white rounded-2xl overflow-hidden shadow-[0_20px_40px_rgba(37,99,235,0.3)] transition-all hover:scale-105 active:scale-95"
                         >
-                            <span className="text-[10px] font-black uppercase tracking-[0.2em]">Cek DNA Visual</span>
-                            <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
+                            <div className="relative z-10 flex items-center gap-4 text-[11px] font-black uppercase tracking-[0.3em]">
+                                Analyze Logic <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-2 transition-transform" />
+                            </div>
+                            <div className="absolute inset-0 bg-white opacity-0 group-hover/btn:opacity-20 transition-opacity" />
                         </button>
                     </div>
-                </div>
+                </motion.div>
+
             </div>
 
+            {/* FOOTER BAR */}
+            <footer className="relative z-10 w-full py-12 px-12 border-t border-white/5 flex justify-between items-center bg-black/40 backdrop-blur-xl">
+                <div className="flex items-center gap-4">
+                    <Target className="w-5 h-5 text-white/20" />
+                    <span className="text-[10px] font-mono font-black text-white/20 tracking-widest uppercase">System Select Protocol: Active</span>
+                </div>
+                <div className="text-[10px] font-mono text-white/10 uppercase tracking-[0.5em]">SQC_IDENTITY_VAULT_2026</div>
+            </footer>
+
+            <style jsx global>{`
+                .perspective-2000 {
+                    perspective: 2000px;
+                }
+            `}</style>
         </div>
     );
 }

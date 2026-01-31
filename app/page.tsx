@@ -7,8 +7,8 @@ export default function Home() {
   const router = useRouter();
 
   useEffect(() => {
-    // Redirect to first slide
-    router.replace("/slide/0");
+    // Redirect to the new Showcase Brand Portal
+    router.replace("/showcase");
   }, [router]);
 
   return (

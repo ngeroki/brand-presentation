@@ -3,7 +3,6 @@
 import { useParams, redirect } from "next/navigation";
 import { brands } from "@/data/brands";
 import LogoUsageSlide from "@/components/slides/LogoUsageSlide";
-import LogoImplementationSlide from "@/components/slides/LogoImplementationSlide";
 
 // Import Visual DNA Master components
 import VisualDnaNarrativeSlide from "@/components/slides/VisualDnaNarrativeSlide";
@@ -41,13 +40,8 @@ export default function VariantPage() {
 
             {/* 2. SECTION: LOGO USAGE */}
             {/* Pass variant prop to use transparent logos */}
-            <div className="w-full relative shrink-0">
+            <div id="usage" className="w-full relative shrink-0 overflow-hidden">
                 <LogoUsageSlide brand={brand} variant={variant} />
-            </div>
-
-            {/* 3. SECTION: IMPLEMENTATION */}
-            <div className="w-full relative shrink-0">
-                <LogoImplementationSlide brand={brand} variant={variant} />
             </div>
 
         </div>
