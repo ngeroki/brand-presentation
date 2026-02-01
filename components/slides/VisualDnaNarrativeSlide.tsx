@@ -81,7 +81,7 @@ export default function VisualDnaNarrativeSlide({ brand }: { brand: BrandData })
                         transition={{ delay: 0.2, duration: 1 }}
                         className="space-y-4"
                     >
-                        <h1 className="text-6xl lg:text-[7rem] font-black tracking-tighter leading-[0.85] text-white uppercase">
+                        <h1 className="text-4xl lg:text-[3.5rem] font-black tracking-tighter leading-[0.85] text-white uppercase">
                             {narrative.title} sebagai <br />
                             <span className={`text-transparent bg-clip-text bg-gradient-to-r ${narrative.accent} filter drop-shadow-[0_0_30px_rgba(197,165,114,0.3)]`}>
                                 {narrative.subtitle}
@@ -93,7 +93,7 @@ export default function VisualDnaNarrativeSlide({ brand }: { brand: BrandData })
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 0.5 }}
                         transition={{ delay: 0.5, duration: 1 }}
-                        className="max-w-2xl text-lg lg:text-2xl font-light leading-relaxed text-slate-400 italic"
+                        className="max-w-2xl text-base lg:text-lg font-light leading-relaxed text-slate-400 italic"
                     >
                         "{brand.narrativePhilosophy?.summary || brand.philosophySummary}"
                     </motion.p>
@@ -148,12 +148,12 @@ export default function VisualDnaNarrativeSlide({ brand }: { brand: BrandData })
                                 {/* Right: The Explanation */}
                                 <div className="flex-1 w-full space-y-10 text-center lg:text-left">
                                     <div className="space-y-4">
-                                        <h2 className="text-4xl lg:text-6xl font-black uppercase tracking-tighter text-white">
+                                        <h2 className="text-2xl lg:text-3xl font-black uppercase tracking-tighter text-white">
                                             The <span style={{ color: accentColor }}>Essence</span>
                                         </h2>
                                         <div className="h-px w-24 mx-auto lg:mx-0" style={{ background: `linear-gradient(to right, ${accentColor}, transparent)` }} />
                                     </div>
-                                    <p className="text-slate-400 leading-relaxed text-lg lg:text-xl font-light italic">
+                                    <p className="text-slate-400 leading-relaxed text-base lg:text-lg font-light italic">
                                         {brand.narrativePhilosophy?.meaning || brand.meaning}
                                     </p>
                                     <div className="grid grid-cols-2 gap-6 pt-6 font-mono">
@@ -239,15 +239,17 @@ export default function VisualDnaNarrativeSlide({ brand }: { brand: BrandData })
                             <div className="flex-1 min-h-[300px] rounded-[2rem] flex items-center justify-center relative overflow-hidden border border-white/10 shadow-inner" style={{ backgroundColor: color }}>
                                 <div className="absolute inset-0 bg-gradient-to-tr from-black/20 via-transparent to-white/20 opacity-40" />
                                 <div className="absolute inset-x-0 top-0 h-1/2 bg-gradient-to-b from-white/20 to-transparent skew-y-12 translate-y-[-50%] group-hover:translate-y-[0%] transition-transform duration-1000" />
-                                <span className="relative z-10 text-white font-black uppercase tracking-tighter text-6xl italic opacity-0 group-hover:opacity-100 transition-all duration-1000 translate-y-8 group-hover:translate-y-0 filter blur-sm group-hover:blur-0 mix-blend-difference">
+                                {/* Dark overlay on hover for text visibility */}
+                                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/50 transition-all duration-500" />
+                                <span className="relative z-10 text-white font-black uppercase tracking-tight text-2xl lg:text-3xl italic opacity-0 group-hover:opacity-100 transition-all duration-500 px-4 text-center drop-shadow-[0_2px_10px_rgba(0,0,0,1)]">
                                     {i === 0 ? 'Foundation.' : i === 1 ? 'Authority.' : 'Excellence.'}
                                 </span>
-                                <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                                    <span className="font-mono text-xs opacity-20 group-hover:opacity-100 transition-opacity mix-blend-difference">{color}</span>
+                                <div className="absolute bottom-4 left-1/2 -translate-x-1/2 pointer-events-none">
+                                    <span className="font-mono text-sm font-black px-3 py-1 bg-black/60 rounded-lg text-white backdrop-blur-sm">{color}</span>
                                 </div>
                             </div>
                             <div className="p-10 space-y-3 text-center">
-                                <h4 className="text-3xl font-black uppercase italic tracking-tighter text-white">
+                                <h4 className="text-base font-black uppercase italic tracking-tighter text-white">
                                     {i === 0 ? 'Primary' : i === 1 ? 'Secondary' : 'Accent'} Tone
                                 </h4>
                                 <div className="inline-block px-4 py-1.5 bg-black/40 border border-white/10 rounded-full text-[10px] font-mono font-black uppercase tracking-widest" style={{ color: accentColor }}>
