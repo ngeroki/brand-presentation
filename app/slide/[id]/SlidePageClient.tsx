@@ -38,7 +38,7 @@ export default function SlidePageClient() {
         // Brand kit slides
         slides.push(<BrandKitSpecsSlide key={`${brand.id}-specs`} brand={brand} />);
         slides.push(<LogoUsageSlide key={`${brand.id}-usage`} brand={brand} variant="full-shape" />);
-        slides.push(<LogoImplementationSlide key={`${brand.id}-implementation`} brand={brand} />);
+        slides.push(<LogoImplementationSlide key={`${brand.id}-implementation`} brand={brand} variant="full-shape" />);
     });
 
     // Closing section
