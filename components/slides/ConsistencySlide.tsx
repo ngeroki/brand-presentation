@@ -147,7 +147,7 @@ export default function ConsistencySlide() {
             <footer className="w-full mt-auto py-10 px-12 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-8 bg-black/40 backdrop-blur-2xl">
                 <div className="flex items-center gap-6 text-white/20">
                     <div className="w-6 h-6 bg-gradient-to-br from-[#C5A572] to-[#8A7145] rounded-md flex items-center justify-center rotate-45 shadow-lg">
-                        <network className="w-3.5 h-3.5 text-[#0B1221] -rotate-45" />
+                        <Network className="w-3.5 h-3.5 text-[#0B1221] -rotate-45" />
                     </div>
                     <span className="text-[10px] font-mono font-black tracking-widest uppercase">System Integrity // Global Standard 1.0</span>
                 </div>
