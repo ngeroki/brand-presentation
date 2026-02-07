@@ -2,11 +2,9 @@
 
 import { useParams, redirect } from "next/navigation";
 import { brands } from "@/data/brands";
-import LogoUsageSlide from "@/components/slides/LogoUsageSlide";
 
-// Import Visual DNA Master components
-import VisualDnaNarrativeSlide from "@/components/slides/VisualDnaNarrativeSlide";
-import VisualDnaGeometricSlide from "@/components/slides/VisualDnaGeometricSlide";
+// Unified Visual DNA component (handles both variants, including Logo Usage section)
+import VisualDnaSlide from "@/components/slides/VisualDnaSlide";
 
 export default function VariantPageClient() {
     const params = useParams();
@@ -26,24 +24,12 @@ export default function VariantPageClient() {
     // Type assertion after validation
     const variant = variantId as 'full-shape' | 'geometric';
 
-    // Use consolidated components based on variant
-    const VisualDnaComponent = variant === 'geometric' ? VisualDnaGeometricSlide : VisualDnaNarrativeSlide;
-
     return (
-        <div className="flex flex-col w-full h-full"> {/* Long Scroll Container */}
-
-            {/* 1. SECTION: VISUAL DNA */}
-            {/* Constraint: These components have h-full or min-h-full, which works well in a stacked column */}
+        <div className="flex flex-col w-full h-full">
+            {/* UNIFIED VISUAL DNA - Includes Philosophy, Colors, Logo Usage, and Gallery */}
             <div className="w-full relative shrink-0">
-                <VisualDnaComponent brand={brand} />
+                <VisualDnaSlide brand={brand} variant={variant} />
             </div>
-
-            {/* 2. SECTION: LOGO USAGE */}
-            {/* Pass variant prop to use transparent logos */}
-            <div id="usage" className="w-full relative shrink-0 overflow-hidden">
-                <LogoUsageSlide brand={brand} variant={variant} />
-            </div>
-
         </div>
     );
 }

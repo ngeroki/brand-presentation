@@ -31,6 +31,7 @@ export interface BrandData {
         transparentFullWhite: string;
         transparentGeoWhite: string;
         transparentGeoBlack: string;
+        transparentFullBlack: string;
     };
     colors: {
         primary: string;
@@ -119,6 +120,7 @@ export const brands: BrandData[] = [
             transparentFullWhite: "/logos/transparent/full-shape-white/sqc.png",
             transparentGeoWhite: "/logos/transparent/geometric-white/sqc.png",
             transparentGeoBlack: "/logos/transparent/geometric-black/sqc.png",
+            transparentFullBlack: "/logos/transparent/full-shape-black/sqc.png",
         },
         colors: {
             primary: "#0B1221",
@@ -201,6 +203,7 @@ export const brands: BrandData[] = [
             transparentFullWhite: "/logos/transparent/full-shape-white/mtb.png",
             transparentGeoWhite: "/logos/transparent/geometric-white/mtb.png",
             transparentGeoBlack: "/logos/transparent/geometric-black/mtb.png",
+            transparentFullBlack: "/logos/transparent/full-shape-black/mtb.png",
         },
         colors: {
             primary: "#1A1816",
@@ -287,6 +290,7 @@ export const brands: BrandData[] = [
             transparentFullWhite: "/logos/transparent/full-shape-white/mre.png",
             transparentGeoWhite: "/logos/transparent/geometric-white/mre.png",
             transparentGeoBlack: "/logos/transparent/geometric-black/mre.png",
+            transparentFullBlack: "/logos/transparent/full-shape-black/mre.png",
         },
         colors: {
             primary: "#020617",

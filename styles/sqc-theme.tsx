@@ -31,28 +31,28 @@
 // COLORS
 // =============================================================================
 export const sqcColors = {
-    // Primary
-    navy: "#0B1221",
-    navyDeep: "#09101E",
+    // Primary backgrounds
+    background: "#FFFFFF",  // Main white background
+    navy: "#1E293B",        // For dark sections/navbar
+    navyDeep: "#0F172A",    // Deep navy for accents
+    navyDark: "#0B1221",    // Original dark
     gold: "#C5A572",
     goldBright: "#EBB218",
 
-    // Cards
-    cardBright: "#E5E7EB",
-    cardBrightBorder: "#D1D5DB",
-    cardDark: "#3B3C40",
-    cardDarkBorder: "#555555",
+    // Cards (all dark navy)
+    cardPrimary: "#0F172A",     // Dark navy cards
+    cardSecondary: "#1E293B",   // Slightly lighter
+    cardBorder: "#334155",      // Card borders
 
-    // Text
-    textPrimary: "text-white",
-    textSecondary: "text-white/60",
-    textMuted: "text-white/50",
-    textSubtle: "text-white/40",
+    // Text on white background (outside cards)
+    textOnLight: "text-zinc-900",
+    textOnLightMuted: "text-zinc-500",
+
+    // Text on dark cards (inside cards)
+    textOnDark: "text-white",
+    textOnDarkMuted: "text-white/60",
+    textOnDarkSubtle: "text-white/40",
     textAccent: "text-[#C5A572]",
-
-    // On Bright Card
-    textOnBright: "text-[#0B1221]",
-    textOnBrightMuted: "text-[#0B1221]/60",
 };
 
 // =============================================================================
@@ -64,7 +64,7 @@ export const sqc = {
     // -------------------------------------------------------------------------
     layout: {
         /** Root container for SQC pages */
-        root: "flex flex-col w-full min-h-full bg-[#0B1221] text-white overflow-y-auto no-scrollbar scroll-smooth p-0 select-none relative",
+        root: "flex flex-col w-full min-h-full bg-white text-zinc-900 overflow-y-auto no-scrollbar scroll-smooth p-0 select-none relative",
 
         /** Main content area with proper z-index */
         content: "relative z-10 flex-1 flex flex-col",
@@ -106,7 +106,7 @@ export const sqc = {
     // -------------------------------------------------------------------------
     label: {
         /** Tag above section title */
-        tag: "inline-flex items-center gap-3 px-3 py-1 bg-white/5 border-white/10 rounded-full border text-[10px] font-mono tracking-widest uppercase text-[#C5A572] font-bold",
+        tag: "inline-flex items-center gap-3 px-3 py-1 bg-[#0B1221] border-white/10 rounded-full border text-[10px] font-mono tracking-widest uppercase text-[#C5A572] font-bold",
 
         /** Sub-section label (e.g., "— GRID SYSTEM —") */
         sub: "text-[10px] tracking-[0.4em] text-white/30 uppercase font-bold",
@@ -116,11 +116,17 @@ export const sqc = {
     // CARD - Content containers
     // -------------------------------------------------------------------------
     card: {
-        /** Bright card (for logo display) */
-        bright: "rounded-2xl border bg-[#E5E7EB] border-[#D1D5DB]",
+        /** Primary dark royal blue card */
+        primary: "rounded-2xl border bg-[#0B1221] border-white/10",
 
-        /** Dark card (for text panels) */
-        dark: "rounded-2xl border bg-[#3B3C40] border-[#555]",
+        /** Secondary card (slightly lighter) */
+        secondary: "rounded-2xl border bg-[#0F1729] border-white/10",
+
+        /** Logo container (dark royal blue) */
+        logo: "rounded-2xl border bg-[#0B1221] border-white/10",
+
+        /** Glass effect card */
+        glass: "rounded-2xl border bg-[#0B1221]/95 border-white/10 backdrop-blur-xl",
     },
 
     // -------------------------------------------------------------------------
@@ -143,14 +149,13 @@ import Image from "next/image";
  */
 export function SQCBackground() {
     return (
-        <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden bg-[#0B1221]">
-            {/* Base Background Overlay (Clean) */}
-            <div className="absolute inset-0 bg-[#09101E]/40" />
+        <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden bg-white">
+            {/* Subtle gradient overlay */}
+            <div className="absolute inset-0 bg-gradient-to-br from-zinc-50 via-white to-zinc-100/50" />
 
-            {/* Glow Effects (Subtle luxury highlights) */}
-            <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-[#121B2E] rounded-full blur-[120px] opacity-40 mix-blend-color-dodge" />
-            <div className="absolute bottom-[-10%] right-[-10%] w-[60%] h-[60%] bg-[#040815] rounded-full blur-[150px] opacity-60" />
-            <div className="absolute top-[20%] right-[10%] w-[30%] h-[30%] bg-[#EBB218]/5 rounded-full blur-[100px] mix-blend-overlay" />
+            {/* Subtle glow accents */}
+            <div className="absolute top-[-10%] right-[-10%] w-[40%] h-[40%] bg-[#C5A572]/5 rounded-full blur-[150px]" />
+            <div className="absolute bottom-[-10%] left-[-10%] w-[50%] h-[50%] bg-zinc-200/30 rounded-full blur-[120px]" />
         </div>
     );
 }
